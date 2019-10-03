@@ -11,6 +11,7 @@ const typeDefs = gql`
         email: String
         address: String
         purchases: [Purchase]
+        latestVisit: DateTime
     },
 
     type Purchase {

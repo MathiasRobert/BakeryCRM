@@ -74,6 +74,11 @@ const resolvers = {
     },
     Customer: {
         purchases: (customer) => purchasesData.filter(purchase => purchase.customerID == customer.id),
+        latestVisit: (customer) => {
+            const purchases = purchasesData.filter(purchase => purchase.customerID == customer.id);
+            const latest = purchases.sort((a,b) => a.timestamp > b.timestamp)[0]
+            return latest ? latest.timestamp : null;
+        }
     },
 };
 
