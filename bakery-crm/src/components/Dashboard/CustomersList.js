@@ -66,7 +66,10 @@ function CustomerList () {
                         >
                             <TableCell>{customer.firstname + ' ' + customer.lastname}</TableCell>
                             <TableCell>{customer.address}</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>{customer.latestVisit 
+                                ? (new Date(customer.latestVisit)).toLocaleDateString() + ' ' + (new Date(customer.latestVisit)).toLocaleTimeString() 
+                                : 'Unknown'}
+                            </TableCell>
                         </TableRow>
                         ))}
                     </TableBody>
