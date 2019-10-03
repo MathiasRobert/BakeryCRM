@@ -1,17 +1,18 @@
 import React, { Component } from "react";
+import {
+    Container
+} from '@material-ui/core';
+import CustomersList from '../../components/Dashboard/CustomersList'
 
 class Dashboard extends Component {
-
-    componentDidMount() {
-        
-    }
-
     render() {
         return(
-            <div>Dashboard</div>
+            <Container>
+                <h4>Bakery CRM</h4>
+                <CustomersList />
+            </Container>
         )
     }
 }
-
 
 export default Dashboard;
