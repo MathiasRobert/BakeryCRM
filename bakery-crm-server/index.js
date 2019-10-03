@@ -1,70 +1,110 @@
-var express = require('express');
-var express_graphql = require('express-graphql');
-var { buildSchema } = require('graphql');
+const express = require('express');
+const { ApolloServer, gql } = require('apollo-server-express');
+const { makeExecutableSchema } = require('graphql-tools');
+const { GraphQLDateTime } = require('graphql-iso-date');
+
 // GraphQL schema
-var schema = buildSchema(`
-    type Query {
-        course(id: Int!): Course
-        courses(topic: String): [Course]
+const typeDefs = gql`
+    scalar DateTime,
+    type Customer {
+        id: ID!
+        firstname: String!
+        lastname: String!
+        email: String
+        address: String
+        purchases: [Purchase]
     },
-    type Course {
-        id: Int
-        title: String
-        author: String
-        description: String
-        topic: String
-        url: String
+    type Purchase {
+        id: ID!
+        customer: [Customer]
+        productName: String!
+        price: Float!
+        timestamp: DateTime!
+    },
+    type Query {
+        getCustomer(id: ID!): Customer
+        getCustomers: [Customer]
+    },
+    type Mutation {
+        addCustomer(firstname: String!, lastname: String!, email: String, address: String): Customer,
+        updateCustomer(firstname: String!, lastname: String!, email: String, address: String): Customer,
+        addPurchase(customerID: ID!, productName: String, price: Float!): Purchase,
     }
-`);
-var coursesData = [
+`;
+
+let customersData = [
     {
         id: 1,
-        title: 'The Complete Node.js Developer Course',
-        author: 'Andrew Mead, Rob Percival',
-        description: 'Learn Node.js by building real-world applications with Node, Express, MongoDB, Mocha, and more!',
-        topic: 'Node.js',
-        url: 'https://codingthesmartway.com/courses/nodejs/'
+        firstname: 'John',
+        lastname: 'Doe',
+        email: 'john-doe@gmail.com',
+        address: '1 test street'
     },
     {
         id: 2,
-        title: 'Node.js, Express & MongoDB Dev to Deployment',
-        author: 'Brad Traversy',
-        description: 'Learn by example building & deploying real-world Node.js applications from absolute scratch',
-        topic: 'Node.js',
-        url: 'https://codingthesmartway.com/courses/nodejs-express-mongodb/'
-    },
+        firstname: 'John',
+        lastname: 'Doe',
+        email: 'john-doe@gmail.com',
+        address: '1 test street'
+    }
+];
+let purchasesData = [
     {
-        id: 3,
-        title: 'JavaScript: Understanding The Weird Parts',
-        author: 'Anthony Alicea',
-        description: 'An advanced JavaScript course for everyone! Scope, closures, prototypes, this, build your own framework, and more.',
-        topic: 'JavaScript',
-        url: 'https://codingthesmartway.com/courses/understand-javascript/'
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
     }
-]
-var getCourse = function(args) { 
-    var id = args.id;
-    return coursesData.filter(course => {
-        return course.id == id;
-    })[0];
+];
+
+const addCustomer = (args) => { 
+    let customer = {
+        id: customersData.length + 1,
+        firstname: args.firstname,
+        lastname: args.lastname,
+        email: args.email,
+        address: args.address,
+    };
+    customersData.push(customer);
+    return customer;
 }
-var getCourses = function(args) {
-    if (args.topic) {
-        var topic = args.topic;
-        return coursesData.filter(course => course.topic === topic);
-    } else {
-        return coursesData;
+
+const updateCustomer = (args) => { 
+    const customer = customersData.find(customer => customer.id == args.id);
+    if(customer){
+        customer.firstname = args.firstname,
+        customer.lastname =  args.lastname,
+        customer.email = args.email,
+        customer.address = args.address
     }
+    return customer;
 }
-var root = {
-    course: getCourse,
-    courses: getCourses
-};
+
+const resolvers = {
+    DateTime: GraphQLDateTime,
+    Query: {
+        getCustomer: (args) => customersData.find(customer => customer.id == args.id),
+        getCustomers: () => customersData,
+    },
+    Mutation: {
+        addCustomer: (args) => addCustomer(args),
+        updateCustomer: (args) => updateCustomer(args),
+        addPurchase: (args) => addPurchase(args),
+    },
+    Customer: {
+        purchases: (customer) => purchasesData.filter(purchase => purchase.customerID == customer.id),
+    },
+  };
+
+
 // Create an express server and a GraphQL endpoint
-var app = express();
-app.use('/graphql', express_graphql({
-    schema: schema,
-    rootValue: root,
-    graphiql: true
-}));
-app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+var schema = makeExecutableSchema({typeDefs, resolvers});
+const server = new ApolloServer({ schema, resolvers });
+
+const app = express();
+server.applyMiddleware({ app });
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);
