@@ -66,6 +66,7 @@ const resolvers = {
     Query: {
         getCustomer: (_, { id }) => customersData.find(customer => customer.id == id),
         getCustomers: () => customersData,
+        getPurchases: (_, { customerID }) => purchasesData.filter(purchase => purchase.customerID == customerID),
     },
     Mutation: {
         addCustomer: (_, args) => addCustomer(args),
