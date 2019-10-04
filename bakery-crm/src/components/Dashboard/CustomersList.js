@@ -17,7 +17,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { NavLink } from 'react-router-dom';
 
 const GET_CUSTOMERS = gql`
-    query {
+    query customers{
         getCustomers {
             id
             firstname
@@ -29,7 +29,9 @@ const GET_CUSTOMERS = gql`
 `;
 
 function CustomerList () {
-    const { loading, error, data } = useQuery(GET_CUSTOMERS);
+    const { loading, error, data } = useQuery(GET_CUSTOMERS, {
+        pollInterval: 500
+    });
 
     if (loading) return 'Loading...';
     if (error) return `Error: ${error.message}`;
@@ -40,7 +42,7 @@ function CustomerList () {
                 action={
                     <Button
                         component={NavLink}
-                        to="/customercreate"
+                        to="/customer/create"
                         color="primary"
                         size="small"
                         variant="outlined"

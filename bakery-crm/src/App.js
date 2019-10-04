@@ -14,12 +14,12 @@ class App extends Component {
             <div>
               <Switch>
                 <Route exact path="/" component={Dashboard} />
+                <Route exact path="/customer/create" component={CustomerCreate} />
                 <Route exact path="/customer/:id" component={CustomerShow} />
-                <Route exact path="/customercreate" component={CustomerCreate} />
               </Switch>
             </div>
           </div>
         )
-      }
+    }
 }
 export default App;

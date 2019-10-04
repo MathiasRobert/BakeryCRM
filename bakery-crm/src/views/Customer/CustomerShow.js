@@ -71,8 +71,15 @@ function CustomerShow({ match }) {
 
     if (loading) return 'Loading...';
     if (error) return `Error: ${error.message}`;
-
     const customer = data.getCustomer;
+    if(!customer) {
+        return(
+            <Grid container className={classes.root} justify="center" spacing={2}>
+                <Grid item xs={12}><h3>Customer not found</h3></Grid>
+            </Grid>
+        )
+    }
+    
     return(
         <Grid container className={classes.root} justify="center" spacing={2}>
             <Grid item xs={12}><h3>Customer - {customer.firstname +' '+ customer.lastname}</h3></Grid>
