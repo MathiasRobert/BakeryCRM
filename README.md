@@ -29,26 +29,6 @@ npm install
 npm start
 ```
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Built With
 
 * [React](https://fr.reactjs.org) - Client framework
@@ -56,6 +36,14 @@ Give an example
 * [Apollo](https://www.apollographql.com/docs/) - Used in the server to create the graphQL API and in the client to query this API
 * [GraphQL](https://graphql.org/learn/) - Query language for the API
 
+## Use cases
+
+All the following use cases have been implemented :
+1. See an overview of all his customers, including their full name, address and the latest time of visit
+2. Adding a new customer to the CRM
+3. See information of an individual customer, including name, last-name, email address (optional), address (optional), a summary of their (maximum) last 10 purchases, the total money they have spent at the bakery in the last year
+4. Edit information of an individual customer
+5. Adding a new purchase to an individual customer
 
 ## Assumptions made
 
