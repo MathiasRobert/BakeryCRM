@@ -74,7 +74,7 @@ const resolvers = {
         getCustomer: (_, { id }) => customersData.find(customer => customer.id == id),
         getCustomers: () => customersData,
         getPurchases: (_, { customerID, first }) => {
-            let res = purchasesData.filter(purchase => purchase.customerID == customerID);
+            let res = purchasesData.filter(purchase => purchase.customerID == customerID).sort((a, b) => a.timestamp < b.timestamp);
             if(first)
                 return res.slice(0, first);
             return res;

@@ -13,13 +13,13 @@ import {
 import AddPurchase from './AddPurchase';
 
 const CustomerPurchases = (props) => {
-    const { purchases, customerID } = props;
+    const { purchases, customerID, addPurchaseMutation } = props;
 
     return (
         <Card>
             <CardHeader
                 action={
-                    <AddPurchase customerID={customerID} />
+                    <AddPurchase customerID={customerID} addPurchaseMutation={addPurchaseMutation}/>
                 }
                 title="Last 10 purchases"
             />

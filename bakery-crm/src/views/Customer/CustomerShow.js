@@ -4,7 +4,7 @@ import {
     Grid
 } from '@material-ui/core';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import CustomerDetails from '../../components/Customer/CustomerDetails'
 import CustomerPurchases from '../../components/Customer/CustomerPurchases'
@@ -39,6 +39,14 @@ const UPDATE_CUSTOMER = gql`
         }
     }
 `;
+const ADD_PURCHASE = gql`
+    mutation AddPurchase($customerID: ID!, $productName: String!, $price: Float!) {
+        addPurchase(customerID: $customerID, productName: $productName, price: $price) {
+            id
+        }
+    }
+`;
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -56,6 +64,10 @@ function CustomerShow({ match }) {
     const { loading, error, data } = useQuery(GET_CUSTOMER, {
         variables: { id, customerID, nbItems }
     });
+
+    const [addPurchaseMutation, { dataPurchase }] = useMutation(ADD_PURCHASE);
+
+    console.log(dataPurchase)
 
     if (loading) return 'Loading...';
     if (error) return `Error: ${error.message}`;
@@ -78,7 +90,7 @@ function CustomerShow({ match }) {
                 <CustomerAmountSpent amount={customer.totalAmountSpent} />
             </Grid>
             <Grid item xs={12}>
-                <CustomerPurchases purchases={data.getPurchases} customerID={customerID}/>
+                <CustomerPurchases purchases={data.getPurchases} customerID={customerID} addPurchaseMutation={addPurchaseMutation}/>
             </Grid>
         </Grid>
     )

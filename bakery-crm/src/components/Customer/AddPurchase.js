@@ -10,17 +10,6 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
-
-const ADD_PURCHASE = gql`
-    mutation AddPurchase($customerID: ID!, $productName: String!, $price: Float!) {
-        addPurchase(customerID: $customerID, productName: $productName, price: $price) {
-            id
-        }
-    }
-`;
-
 const useStyles = makeStyles(theme => ({
     addIcon: {
       marginRight: theme.spacing(1),
@@ -28,12 +17,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddPurchase(props) {
+    const { customerID, addPurchaseMutation } = props;
+
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [values, setValues] = useState({ productName: '', price: 0 });
-    const [addPurchase] = useMutation(ADD_PURCHASE);
-    const { customerID } = props;
-
 
     const handleChange = event => {
         setValues({
@@ -51,12 +39,13 @@ function AddPurchase(props) {
     };
 
     const handleAdd = () => {
-        addPurchase({ variables: 
+        addPurchaseMutation({ variables: 
             { 
                 customerID: customerID,  
                 productName: values.productName,  
                 price: parseFloat(values.price),  
-            } 
+            } ,
+            refetchQueries: ['getCustomerAndPurchases']
         });
         setOpen(false);
     };
