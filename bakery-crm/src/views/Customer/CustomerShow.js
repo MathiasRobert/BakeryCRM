@@ -7,22 +7,23 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
 import CustomerDetails from '../../components/Customer/CustomerDetails'
+import CustomerPurchases from '../../components/Customer/CustomerPurchases'
 
 const GET_CUSTOMER = gql`
-    query getCustomerByID($id: ID!) {
+    query getCustomerAndPurchases($id: ID!) {
         getCustomer(id: $id) {
             id
             firstname
             lastname
             email
             address
-            purchases {
-                id
-                productName
-                price
-                timestamp
-            }
-        }
+        },
+        getPurchases(customerID: $id) {
+            id
+            productName
+            price
+            timestamp
+        },
     }
 `;
 const useStyles = makeStyles(theme => ({
@@ -36,10 +37,10 @@ const useStyles = makeStyles(theme => ({
 function CustomerShow({ match }) {
     const classes = useStyles();
     const id = parseInt(match.params.id);
-    console.log(id)
+    const customerID = parseInt(match.params.id);
 
     const { loading, error, data } = useQuery(GET_CUSTOMER, {
-        variables: { id }
+        variables: { id, customerID }
     });
 
     if (loading) return 'Loading...';
@@ -50,8 +51,11 @@ function CustomerShow({ match }) {
         <Grid container className={classes.root} justify="center" spacing={2}>
             <Grid item xs={12}><h3>Customer - {customer.firstname +' '+ customer.lastname}</h3></Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <CustomerDetails customer={customer} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <CustomerPurchases purchases={data.getPurchases} customerID={customerID}/>
             </Grid>
         </Grid>
     )
