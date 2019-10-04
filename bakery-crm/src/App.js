@@ -5,7 +5,6 @@ import NavBar from './components/Layout/NavBar';
 import Dashboard from './views/Dashboard';
 import CustomerShow from './views/Customer/CustomerShow';
 import CustomerCreate from './views/Customer/CustomerCreate';
-import CustomerEdit from './views/Customer/CustomerEdit';
 
 class App extends Component {
     render() {
@@ -17,7 +16,6 @@ class App extends Component {
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/customer/:id" component={CustomerShow} />
                 <Route exact path="/customer/create" component={CustomerCreate} />
-                <Route exact path="/customer/edit" component={CustomerEdit} />
               </Switch>
             </div>
           </div>

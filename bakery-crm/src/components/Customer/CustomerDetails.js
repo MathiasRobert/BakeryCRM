@@ -10,16 +10,27 @@ import {
   TextField
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/react-hooks';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+
 
 const useStyles = makeStyles(theme => ({
-    saveBtn: {
+    submitBtn: {
         marginLeft: 'auto'
-    }
+    },
+    btnIcon: {
+        marginRight: theme.spacing(1),
+    },
 }));
 
 const CustomerDetails = (props) => {
     const classes = useStyles();
     const [values, setValues] = useState(props.customer);
+    const [mutationCustomer] = useMutation(props.mutationCustomer);
+
+    const { cardTitle, btnTxt, type } = props;
+
 
     const handleChange = event => {
         setValues({
@@ -30,10 +41,24 @@ const CustomerDetails = (props) => {
 
     return (
         <Card>
-            <form autoComplete="off" noValidate>
+            <form 
+                autoComplete="off" 
+                onSubmit={e => {
+                    e.preventDefault();
+                    mutationCustomer({ 
+                        variables: { 
+                            id: type === 'edit' ? values.id : null,
+                            firstname: values.firstname,
+                            lastname: values.lastname,
+                            email: values.email,
+                            address: values.address
+                        } 
+                    });
+                }}
+            >
                 <CardHeader
                 // subheader="The information can be edited"
-                title="Customer details"
+                title={cardTitle}
                 />
                 <Divider />
                 <CardContent>
@@ -89,8 +114,9 @@ const CustomerDetails = (props) => {
                 </CardContent>
                 <Divider />
                 <CardActions>
-                    <Button className={classes.saveBtn} color="primary" variant="contained">
-                        Save changes
+                    <Button className={classes.submitBtn} color="primary" variant="outlined" type="submit">
+                        {type === 'add' ? <AddIcon className={classes.btnIcon} /> : <EditIcon className={classes.btnIcon} />}
+                        {btnTxt}
                     </Button>
                 </CardActions>
             </form>

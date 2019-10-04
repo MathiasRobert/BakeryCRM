@@ -25,7 +25,7 @@ let purchasesData = [
         timestamp: new Date()
     },
     {
-        id: 1,
+        id: 2,
         customerID: 1,
         productName: 'Baguette',
         price: '1',
