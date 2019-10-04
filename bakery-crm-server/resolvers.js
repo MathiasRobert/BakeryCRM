@@ -31,146 +31,6 @@ let purchasesData = [
         price: '1',
         timestamp: new Date()
     },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
-    {
-        id: 1,
-        customerID: 1,
-        productName: 'Baguette',
-        price: '1',
-        timestamp: new Date()
-    },
 ];
 
 const addCustomer = (args) => { 
@@ -231,6 +91,11 @@ const resolvers = {
             const purchases = purchasesData.filter(purchase => purchase.customerID == customer.id);
             const latest = purchases.sort((a,b) => a.timestamp > b.timestamp)[0]
             return latest ? latest.timestamp : null;
+        },
+        totalAmountSpent: (customer) => {
+            return purchasesData
+                        .filter(purchase => purchase.customerID == customer.id)
+                        .reduce((a, { price }) => a + parseFloat(price), 0);
         }
     },
 };

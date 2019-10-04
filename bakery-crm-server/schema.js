@@ -12,6 +12,7 @@ const typeDefs = gql`
         address: String
         purchases: [Purchase]
         latestVisit: DateTime
+        totalAmountSpent: Float
     },
 
     type Purchase {
