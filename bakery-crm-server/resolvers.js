@@ -23,7 +23,154 @@ let purchasesData = [
         productName: 'Baguette',
         price: '1',
         timestamp: new Date()
-    }
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
+    {
+        id: 1,
+        customerID: 1,
+        productName: 'Baguette',
+        price: '1',
+        timestamp: new Date()
+    },
 ];
 
 const addCustomer = (args) => { 
@@ -66,7 +213,12 @@ const resolvers = {
     Query: {
         getCustomer: (_, { id }) => customersData.find(customer => customer.id == id),
         getCustomers: () => customersData,
-        getPurchases: (_, { customerID }) => purchasesData.filter(purchase => purchase.customerID == customerID),
+        getPurchases: (_, { customerID, first }) => {
+            let res = purchasesData.filter(purchase => purchase.customerID == customerID);
+            if(first)
+                return res.slice(0, first);
+            return res;
+        },
     },
     Mutation: {
         addCustomer: (_, args) => addCustomer(args),

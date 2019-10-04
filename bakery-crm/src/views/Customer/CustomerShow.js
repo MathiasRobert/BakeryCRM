@@ -18,7 +18,7 @@ const GET_CUSTOMER = gql`
             email
             address
         },
-        getPurchases(customerID: $id) {
+        getPurchases(customerID: $id, first: 10) {
             id
             productName
             price

@@ -25,7 +25,7 @@ const typeDefs = gql`
     type Query {
         getCustomer(id: ID!): Customer
         getCustomers: [Customer]
-        getPurchases(customerID: ID!): [Purchase]
+        getPurchases(customerID: ID!, first: Int): [Purchase]
     },
 
     type Mutation {
