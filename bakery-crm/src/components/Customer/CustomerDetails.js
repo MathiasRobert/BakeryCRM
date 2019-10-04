@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
-
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     submitBtn: {
@@ -26,11 +26,19 @@ const useStyles = makeStyles(theme => ({
 
 const CustomerDetails = (props) => {
     const classes = useStyles();
-    const [values, setValues] = useState(props.customer);
-    const [mutationCustomer] = useMutation(props.mutationCustomer);
-
-    const { cardTitle, btnTxt, type } = props;
-
+    const { customer, cardTitle, btnTxt, type, history } = props
+    let localCustomer;
+    if(!customer)
+        localCustomer = { firstname :'', lastname: '', email: '', address: ''}
+    else
+        localCustomer = customer;
+    const [values, setValues] = useState(localCustomer);
+    const [mutationCustomer] = useMutation(props.mutationCustomer, {
+        onCompleted(data) {
+            if(type === 'add')
+                history.push('/customer/' + data.addCustomer.id)
+        }
+    });
 
     const handleChange = event => {
         setValues({
@@ -52,7 +60,7 @@ const CustomerDetails = (props) => {
                             lastname: values.lastname,
                             email: values.email,
                             address: values.address
-                        } 
+                        }
                     });
                 }}
             >
@@ -124,4 +132,4 @@ const CustomerDetails = (props) => {
     );
 };
 
-export default CustomerDetails;
+export default withRouter(CustomerDetails);

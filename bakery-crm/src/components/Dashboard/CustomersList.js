@@ -40,7 +40,7 @@ function CustomerList () {
                 action={
                     <Button
                         component={NavLink}
-                        to="/customer/create"
+                        to="/customercreate"
                         color="primary"
                         size="small"
                         variant="outlined"
