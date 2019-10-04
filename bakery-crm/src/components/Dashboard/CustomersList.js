@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     Card,
     CardHeader,
@@ -11,8 +11,10 @@ import {
     TableHead,
     TableRow
 } from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { NavLink } from 'react-router-dom';
 
 const GET_CUSTOMERS = gql`
     query {
@@ -34,10 +36,11 @@ function CustomerList () {
 
     return(
         <Card>
-            {console.log(data)}
             <CardHeader
                 action={
                     <Button
+                        component={NavLink}
+                        to="/customer/create"
                         color="primary"
                         size="small"
                         variant="outlined"
@@ -56,6 +59,7 @@ function CustomerList () {
                             <TableCell>Full name</TableCell>
                             <TableCell>Address</TableCell>
                             <TableCell>Latest visit</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -69,6 +73,11 @@ function CustomerList () {
                             <TableCell>{customer.latestVisit 
                                 ? (new Date(customer.latestVisit)).toLocaleDateString() + ' ' + (new Date(customer.latestVisit)).toLocaleTimeString() 
                                 : 'Unknown'}
+                            </TableCell>
+                            <TableCell>
+                                <Button component={NavLink} to={"/customer/" + customer.id}>
+                                    <ArrowForwardIcon />
+                                </Button>
                             </TableCell>
                         </TableRow>
                         ))}
