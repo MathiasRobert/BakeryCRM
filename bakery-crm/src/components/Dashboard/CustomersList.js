@@ -54,34 +54,34 @@ function CustomerList () {
             <CardContent>
                 <div>
                     <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Full name</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Latest visit</TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data.getCustomers.map(customer => (
-                        <TableRow
-                            hover
-                            key={customer.id}
-                        >
-                            <TableCell>{customer.firstname + ' ' + customer.lastname}</TableCell>
-                            <TableCell>{customer.address}</TableCell>
-                            <TableCell>{customer.latestVisit 
-                                ? (new Date(customer.latestVisit)).toLocaleDateString() + ' ' + (new Date(customer.latestVisit)).toLocaleTimeString() 
-                                : 'Unknown'}
-                            </TableCell>
-                            <TableCell>
-                                <Button component={NavLink} to={"/customer/" + customer.id}>
-                                    <ArrowForwardIcon />
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                        ))}
-                    </TableBody>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Full name</TableCell>
+                                <TableCell>Address</TableCell>
+                                <TableCell>Latest visit</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data.getCustomers.map(customer => (
+                            <TableRow
+                                hover
+                                key={customer.id}
+                            >
+                                <TableCell>{customer.firstname + ' ' + customer.lastname}</TableCell>
+                                <TableCell>{customer.address}</TableCell>
+                                <TableCell>{customer.latestVisit 
+                                    ? (new Date(customer.latestVisit)).toLocaleDateString() + ' ' + (new Date(customer.latestVisit)).toLocaleTimeString() 
+                                    : 'Unknown'}
+                                </TableCell>
+                                <TableCell>
+                                    <Button component={NavLink} to={"/customer/" + customer.id}>
+                                        <ArrowForwardIcon />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
                     </Table>
                 </div>
             </CardContent>
