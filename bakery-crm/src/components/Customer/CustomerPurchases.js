@@ -14,20 +14,12 @@ import AddPurchase from './AddPurchase';
 
 const CustomerPurchases = (props) => {
     const { purchases, customerID } = props;
-    console.log(customerID)
 
     return (
         <Card>
             <CardHeader
                 action={
                     <AddPurchase customerID={customerID} />
-                    // <Button
-                    //     color="primary"
-                    //     size="small"
-                    //     variant="outlined"
-                    // >
-                    //     Add purchase
-                    // </Button>
                 }
                 title="Last 10 purchases"
             />

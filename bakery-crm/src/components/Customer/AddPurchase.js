@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { 
+    Button,
+    TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
+
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -16,7 +21,14 @@ const ADD_PURCHASE = gql`
     }
 `;
 
+const useStyles = makeStyles(theme => ({
+    addIcon: {
+      marginRight: theme.spacing(1),
+    },
+}));
+
 function AddPurchase(props) {
+    const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [values, setValues] = useState({ productName: '', price: 0 });
     const [addPurchase] = useMutation(ADD_PURCHASE);
@@ -52,6 +64,7 @@ function AddPurchase(props) {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                <AddIcon className={classes.addIcon} />
                 Add purchase
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
