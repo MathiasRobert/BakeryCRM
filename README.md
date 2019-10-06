@@ -50,3 +50,4 @@ All the following use cases have been implemented :
 
 - I assume Bob will run the solution on a server within his bakery that will never turned off or fail and that has plenty of memory, letting you store the data in memory of the BakeryCRM back-end instead of adding a database.
 - I assume Bob's employees are trustworthy, and no access control is needed for the BakeryCRM system.
+- I assume that the latest visit field correspond to the latest purchase of a customer
