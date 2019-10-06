@@ -17,7 +17,7 @@ import { NavLink } from 'react-router-dom';
 
 import { GET_CUSTOMERS } from '../../api/queries';
 
-function CustomerList () {
+function CustomersList () {
     const { loading, error, data } = useQuery(GET_CUSTOMERS);
 
     if (loading) return 'Loading...';
@@ -78,4 +78,4 @@ function CustomerList () {
     );
 }
   
-export default CustomerList;
+export default CustomersList;

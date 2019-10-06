@@ -11,7 +11,6 @@ import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
 
-import { GET_CUSTOMER_AND_PURCHASES, GET_CUSTOMERS } from '../../api/queries';
 import { ADD_PURCHASE } from '../../api/mutations';
 
 const useStyles = makeStyles(theme => ({
