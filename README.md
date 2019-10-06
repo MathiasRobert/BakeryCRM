@@ -35,6 +35,7 @@ npm start
 * [Node.js](https://nodejs.org/en/) - Server framework
 * [Apollo](https://www.apollographql.com/docs/) - Used in the server to create the graphQL API and in the client to query this API
 * [GraphQL](https://graphql.org/learn/) - Query language for the API
+* [Material-UI](https://material-ui.com) - Used for designing the app faster
 
 ## Use cases
 
