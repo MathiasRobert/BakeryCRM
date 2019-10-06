@@ -15,6 +15,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import { withRouter } from "react-router-dom";
 
+import { GET_CUSTOMERS } from '../../api/queries';
+
 const useStyles = makeStyles(theme => ({
     submitBtn: {
         marginLeft: 'auto'
@@ -33,12 +35,7 @@ const CustomerDetails = (props) => {
     else
         localCustomer = customer;
     const [values, setValues] = useState(localCustomer);
-    const [mutationCustomer] = useMutation(props.mutationCustomer, {
-        onCompleted(data) {
-            if(type === 'add')
-                history.push('/customer/' + data.addCustomer.id)
-        }
-    });
+    const [mutationCustomer] = useMutation(props.mutationCustomer);
 
     const handleChange = event => {
         setValues({
@@ -53,15 +50,28 @@ const CustomerDetails = (props) => {
                 autoComplete="off" 
                 onSubmit={e => {
                     e.preventDefault();
-                    mutationCustomer({ 
-                        variables: { 
-                            id: type === 'edit' ? values.id : null,
-                            firstname: values.firstname,
-                            lastname: values.lastname,
-                            email: values.email,
-                            address: values.address
-                        }
-                    });
+                    if (type === 'add') {
+                        mutationCustomer({ 
+                            variables: { 
+                                firstname: values.firstname,
+                                lastname: values.lastname,
+                                email: values.email,
+                                address: values.address
+                            },
+                            refetchQueries: [{ query: GET_CUSTOMERS, variables: { awaitRefetchQueries: true }}]
+                        }).then((data) => history.push('/customer/' + data.data.addCustomer.id));
+                    } else {
+                        mutationCustomer({ 
+                            variables: { 
+                                id: values.id,
+                                firstname: values.firstname,
+                                lastname: values.lastname,
+                                email: values.email,
+                                address: values.address
+                            }
+                        });
+                    }
+                    
                 }}
             >
                 <CardHeader

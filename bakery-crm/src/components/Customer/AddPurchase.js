@@ -9,6 +9,9 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/react-hooks';
+
+import { ADD_PURCHASE } from '../../api/mutations';
 
 const useStyles = makeStyles(theme => ({
     addIcon: {
@@ -17,7 +20,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddPurchase(props) {
-    const { customerID, addPurchaseMutation } = props;
+    const { customerID } = props;
+
+    const [addPurchaseMutation] = useMutation(ADD_PURCHASE);
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -44,7 +49,7 @@ function AddPurchase(props) {
                 customerID: customerID,  
                 productName: values.productName,  
                 price: parseFloat(values.price),  
-            } ,
+            },
             refetchQueries: ['getCustomerAndPurchases']
         });
         setOpen(false);

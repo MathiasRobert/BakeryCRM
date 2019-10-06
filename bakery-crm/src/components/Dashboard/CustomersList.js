@@ -12,26 +12,13 @@ import {
     TableRow
 } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { NavLink } from 'react-router-dom';
 
-const GET_CUSTOMERS = gql`
-    query customers{
-        getCustomers {
-            id
-            firstname
-            lastname
-            address
-            latestVisit
-        }
-    }
-`;
+import { GET_CUSTOMERS } from '../../api/queries';
 
 function CustomerList () {
-    const { loading, error, data } = useQuery(GET_CUSTOMERS, {
-        pollInterval: 500
-    });
+    const { loading, error, data } = useQuery(GET_CUSTOMERS);
 
     if (loading) return 'Loading...';
     if (error) return `Error: ${error.message}`;

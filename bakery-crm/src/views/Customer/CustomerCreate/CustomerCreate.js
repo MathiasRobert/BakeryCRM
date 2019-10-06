@@ -3,17 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid
 } from '@material-ui/core';
-import gql from 'graphql-tag';
 
-import CustomerDetails from '../../components/Customer/CustomerDetails'
+import CustomerDetails from '../../../components/Customer/CustomerDetails'
+import { ADD_CUSTOMER } from '../../../api/mutations';
 
-const ADD_CUSTOMER = gql`
-    mutation AddCustomer($firstname: String!, $lastname: String!, $email: String, $address: String) {
-        addCustomer(firstname: $firstname, lastname: $lastname, email: $email, address: $address){
-            id
-        }
-    }
-`;
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
